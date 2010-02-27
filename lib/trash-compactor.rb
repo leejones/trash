@@ -5,16 +5,27 @@ class Trash
     File.directory? "#{ENV['HOME']}/.Trash" 
   end
   
-  def self.compact!(file_paths)
-    file_paths.split(' ').each do |file_path|
-      file_name = File.basename(file_path)
-      file_extension = File.extname(file_path)
-      if (File.exists?("#{ENV['HOME']}/.Trash/#{file_name}"))
-        new_file_name = file_name.gsub(file_extension, "01#{file_extension}")
-      else
-        new_file_name = file_name
-      end
-      FileUtils.mv(File.expand_path(file_path), "#{ENV['HOME']}/.Trash/#{new_file_name}")
+  def self.compact!(paths)
+    paths.split(' ').each do |path|
+      path = File.expand_path(path)
+      FileUtils.mv(path, "#{ENV['HOME']}/.Trash/#{unique_file_name(path)}")
     end
+    
+    return 1
+  end
+  
+  private
+  
+  def self.unique_file_name(path)
+    path_name = File.basename(path)
+    path_extension = File.extname(path)
+    if (File.exists?("#{ENV['HOME']}/.Trash/#{path_name}"))
+      count = 1
+      while File.exists?("#{ENV['HOME']}/.Trash/#{path_name.gsub(path_extension, "0#{count}#{path_extension}")}")
+        count += 1
+      end
+      new_path_name = path_name.gsub(path_extension, "0#{count}#{path_extension}")
+    end
+    return new_path_name
   end
 end
