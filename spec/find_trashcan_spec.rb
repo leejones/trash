@@ -18,7 +18,11 @@ describe "TrashCompactor" do
   end
   
   after do
-    trash_files.each {|f| `rm #{f}`}
+    trash_files.each {|f| delete(f)}
+  end
+  
+  def delete(file)
+    `if [ -e #{file} ]; then rm #{file}; fi;`
   end
 
   def trash_should_contain(file_name)
