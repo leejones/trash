@@ -1,6 +1,25 @@
-= trash
+= Trash
 
-Description goes here.
+When it's too hard to say goodbye... an alternative to `rm`.
+
+A simple command line utility to move files/folders to a "trash" folder before deleting them.
+
+== Usage
+
+From the command line:
+
+  trash potentially-important-file.txt
+  
+Handles multiple files with the same name
+
+  trash ~/Documents/Groceries/shopping-list.txt
+  trash ~/Documents/Christmas/shopping-list.txt
+  trash ~/Documents/AutoParts/shopping-list.txt
+  
+Trash folder will contain:
+* shopping-list.txt     # originally ~/Documents/Groceries/shopping-list.txt
+* shopping-list01.txt   # originally ~/Documents/Christmas/shopping-list.txt
+* shopping-list02.txt   # originally ~/Documents/AutoParts/shopping-list.txt
 
 == Note on Patches/Pull Requests
  
