@@ -10,7 +10,9 @@ describe "Trash" do
     "/Users/leejones/.Trash/testing2.txt",
     "/Users/leejones/.Trash/testing01.txt",
     "/Users/leejones/.Trash/testing02.txt",
-    "/Users/leejones/.Trash/testing03.txt"
+    "/Users/leejones/.Trash/testing03.txt",
+    "/Users/leejones/.Trash/testdir01",
+    "/Users/leejones/.Trash/testdir02"
   ]
     
   before do
@@ -22,11 +24,16 @@ describe "Trash" do
   end
   
   def delete(file)
-    `if [ -e #{file} ]; then rm #{file}; fi;`
+    `if [ -e #{file} ]; then rm -rf #{file}; fi;`
   end
 
   def trash_should_contain(file_name)
     File.exist?("#{ENV['HOME']}/.Trash/#{file_name}").should == true    
+  end
+
+  def trash_should_contain_directory(directory_name)
+    File.directory?(directory_name)
+    trash_should_contain(directory_name)
   end
   
   def tmp_should_not_contain(file_name)
@@ -76,10 +83,20 @@ describe "Trash" do
     fifth.read.should == "testing different file 3 with same name\n"
   end
   
-  it "moves directories to the trash" do
+  it "moves a directory to the trash" do
+    dir = `mkdir -p /tmp/testdir01`
+    Trash.throw_out("/tmp/testdir01")
+    tmp_should_not_contain "testdir01"
+    trash_should_contain_directory "testdir01"
   end
 
   it "moves multiple directories to the trash" do
+    dirs = `mkdir -p /tmp/testdir01 /tmp/testdir02`
+    Trash.throw_out("/tmp/testdir01 /tmp/testdir02")
+    tmp_should_not_contain "testdir01"
+    tmp_should_not_contain "testdir02"
+    trash_should_contain_directory "testdir01"
+    trash_should_contain_directory "testdir02"
   end
 
   it "finds the trashcan" do

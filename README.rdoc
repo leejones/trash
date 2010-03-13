@@ -1,4 +1,4 @@
-= trash-compactor
+= trash
 
 Description goes here.
 
