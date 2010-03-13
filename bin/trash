@@ -3,4 +3,4 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib') unless $:.incl
 
 require 'trash-compactor'
 
-exit Trash.compact!(*ARGV)
+exit Trash.throw_out!(*ARGV)

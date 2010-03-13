@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "TrashCompactor" do
+describe "Trash" do
   test_files = [
     "/tmp/testing.txt",
     "/tmp/testing2.txt"
@@ -34,13 +34,13 @@ describe "TrashCompactor" do
   end
 
   it "moves a file to the trash" do
-    Trash.compact!("/tmp/testing.txt")
+    Trash.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
   end
   
   it "moves multiple files to the trash" do
-    Trash.compact!("/tmp/testing.txt /tmp/testing2.txt")
+    Trash.throw_out("/tmp/testing.txt /tmp/testing2.txt")
     tmp_should_not_contain "testing.txt"
     tmp_should_not_contain "testing2.txt"
     trash_should_contain "testing.txt"
@@ -48,28 +48,28 @@ describe "TrashCompactor" do
   end
 
   it "appends a number to the filename if a file with same name already exisits in trash" do
-    Trash.compact!("/tmp/testing.txt")
+    Trash.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
     original = File.new("/Users/leejones/.Trash/testing.txt", "r")
     original.read.should == "default text\n"
     
     `echo 'testing different file with same name' > /tmp/testing.txt`
-    Trash.compact!("/tmp/testing.txt")
+    Trash.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing01.txt" 
     third = File.new("/Users/leejones/.Trash/testing01.txt", "r")
     third.read.should == "testing different file with same name\n"
   
     `echo 'testing different file 2 with same name' > /tmp/testing.txt`
-    Trash.compact!("/tmp/testing.txt")
+    Trash.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing02.txt"
     fourth = File.new("/Users/leejones/.Trash/testing02.txt", "r")
     fourth.read.should == "testing different file 2 with same name\n"
 
     `echo 'testing different file 3 with same name' > /tmp/testing.txt`
-    Trash.compact!("/tmp/testing.txt")
+    Trash.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing03.txt"
     fifth = File.new("/Users/leejones/.Trash/testing03.txt", "r")

@@ -5,7 +5,7 @@ class Trash
     File.directory? "#{ENV['HOME']}/.Trash" 
   end
   
-  def self.compact!(paths)
+  def self.throw_out(paths)
     paths.split(' ').each do |path|
       path = File.expand_path(path)
       FileUtils.mv(path, "#{ENV['HOME']}/.Trash/#{unique_file_name(path)}")
