@@ -1,30 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Trash" do
-  test_files = [
-    "/tmp/testing.txt",
-    "/tmp/testing2.txt"
-  ]
-  trash_files = [
-    "/Users/leejones/.Trash/testing.txt",
-    "/Users/leejones/.Trash/testing2.txt",
-    "/Users/leejones/.Trash/testing01.txt",
-    "/Users/leejones/.Trash/testing02.txt",
-    "/Users/leejones/.Trash/testing03.txt",
-    "/Users/leejones/.Trash/testdir01",
-    "/Users/leejones/.Trash/testdir02"
-  ]
-    
-  before do
-    test_files.each {|f| `echo 'default text' > #{f}`}
-  end
-  
-  after do
-    trash_files.each {|f| delete(f)}
-  end
-  
   def delete(file)
     `if [ -e #{file} ]; then rm -rf #{file}; fi;`
+  end
+  
+  def delete_from_trash(file)
+    delete("#{ENV['HOME']}/.Trash/#{file}")
   end
 
   def trash_should_contain(file_name)
@@ -41,17 +23,23 @@ describe "Trash" do
   end
 
   it "moves a file to the trash" do
+    `echo 'default text' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
+    delete_from_trash "testing.txt"
   end
   
   it "moves multiple files to the trash" do
+    `echo 'default text first' > /tmp/testing.txt`
+    `echo 'default text second' > /tmp/testing2.txt`
     Trash.new.throw_out(["/tmp/testing.txt", "/tmp/testing2.txt"])
     tmp_should_not_contain "testing.txt"
     tmp_should_not_contain "testing2.txt"
     trash_should_contain "testing.txt"
     trash_should_contain "testing2.txt"
+    delete_from_trash "testing.txt"
+    delete_from_trash "testing2.txt"
   end
 
   it "should handle spaces in the file/folder name" do
@@ -59,10 +47,11 @@ describe "Trash" do
     Trash.new.throw_out("/tmp/test with spaces.txt")
     tmp_should_not_contain "test with spaces.txt"
     trash_should_contain "test with spaces.txt"
-    delete("\"/Users/leejones/.Trash/test with spaces.txt\"")
+    delete_from_trash "\"test with spaces.txt\""
   end
 
   it "appends a number to the filename if a file with same name already exisits in trash" do
+    `echo 'default text' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
@@ -89,6 +78,11 @@ describe "Trash" do
     trash_should_contain "testing03.txt"
     fifth = File.new("/Users/leejones/.Trash/testing03.txt", "r")
     fifth.read.should == "testing different file 3 with same name\n"
+    
+    delete_from_trash "testing.txt"
+    delete_from_trash "testing01.txt"
+    delete_from_trash "testing02.txt"
+    delete_from_trash "testing03.txt"
   end
   
   it "moves a directory to the trash" do
@@ -96,6 +90,7 @@ describe "Trash" do
     Trash.new.throw_out("/tmp/testdir01")
     tmp_should_not_contain "testdir01"
     trash_should_contain_directory "testdir01"
+    delete_from_trash "testdir01"
   end
 
   it "moves multiple directories to the trash" do
@@ -105,6 +100,8 @@ describe "Trash" do
     tmp_should_not_contain "testdir02"
     trash_should_contain_directory "testdir01"
     trash_should_contain_directory "testdir02"
+    delete_from_trash "testdir01"
+    delete_from_trash "testdir02"
   end
 
   describe "trashcan" do
