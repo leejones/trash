@@ -1,11 +1,13 @@
 require 'fileutils'
 
 class Trash
+  attr_reader :errors
   attr_accessor :trashcan
   
   def initialize(options = {})
     @trashcan = options[:trashcan].nil? ? "#{ENV['HOME']}/.Trash" : options[:trashcan]
     create_trashcan_if_absent
+    @errors = []
   end
 
   def has_trashcan?
@@ -15,10 +17,19 @@ class Trash
   def throw_out(paths)
     paths.each do |path|
       path = File.expand_path(path)
-      FileUtils.mv(path, "#{ENV['HOME']}/.Trash/#{unique_file_name(path)}")
+      if File.exist? path
+        FileUtils.mv(path, "#{ENV['HOME']}/.Trash/#{unique_file_name(path)}")
+      else
+        add_error "#{path} does not exist.  Please check the file path."
+        return 1
+      end
     end
     
-    return 1
+    return 0
+  end
+  
+  def add_error(error)
+    @errors << error
   end
   
   private

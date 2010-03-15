@@ -85,6 +85,13 @@ describe "Trash" do
     delete_from_trash "testing03.txt"
   end
   
+  it "should throw an error when file does not exist" do
+    tmp_should_not_contain "not_a_file.txt"
+    trash = Trash.new
+    trash.throw_out("/tmp/not_a_file.txt").should == 1
+    trash.errors.join(' ').should == "/tmp/not_a_file.txt does not exist.  Please check the file path."
+  end
+  
   it "moves a directory to the trash" do
     dir = `mkdir -p /tmp/testdir01`
     Trash.new.throw_out("/tmp/testdir01")
