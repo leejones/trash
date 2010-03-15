@@ -13,7 +13,7 @@ class Trash
   end
   
   def throw_out(paths)
-    paths.split(' ').each do |path|
+    paths.each do |path|
       path = File.expand_path(path)
       FileUtils.mv(path, "#{ENV['HOME']}/.Trash/#{unique_file_name(path)}")
     end
