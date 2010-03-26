@@ -42,7 +42,7 @@ describe "Trash" do
     delete_from_trash "testing2.txt"
   end
 
-  it "should handle spaces in the file/folder name" do
+  it "should handle spaces in the file/directory name" do
     create_file = `echo "Test with spaces..." > "/tmp/test with spaces.txt"`
     Trash.new.throw_out("/tmp/test with spaces.txt")
     tmp_should_not_contain "test with spaces.txt"
@@ -110,6 +110,22 @@ describe "Trash" do
     delete_from_trash "testdir01"
     delete_from_trash "testdir02"
   end
+  
+  it "handles dots in a directory name" do
+    `mkdir -p /tmp/testdir.2010`
+    Trash.new.throw_out("/tmp/testdir.2010")
+    tmp_should_not_contain "testdir.2010"
+    trash_should_contain_directory "testdir.2010"
+
+    `mkdir -p /tmp/testdir.2010`
+    Trash.new.throw_out("/tmp/testdir.2010")
+    tmp_should_not_contain "testdir.2010"
+    trash_should_contain_directory "testdir.201001"
+    
+    delete_from_trash "testdir.2010"
+    delete_from_trash "testdir.201001"
+  end
+
 
   it "appends a number to the directory name if a directory with same name already exisits in trash" do
     `mkdir -p /tmp/testing`
@@ -138,16 +154,16 @@ describe "Trash" do
     delete_from_trash "testing03"
   end
 
-  describe "trashcan" do
-    it "finds the trashcan" do
+  describe "trash_can" do
+    it "finds the trash can" do
       FileUtils.mkdir_p "#{ENV['HOME']}/.Trash"
-      Trash.new.has_trashcan?.should == true
+      Trash.new.has_trash_can?.should == true
     end
 
-    it "creates a trashcan if one does not exist" do
+    it "creates a trash can if one does not exist" do
       delete("/tmp/test_trash_can")
       File.exist?("/tmp/test_trash_can").should == false
-      oscar = Trash.new({:trashcan => "/tmp/test_trash_can"})
+      oscar = Trash.new({:trash_can => "/tmp/test_trash_can"})
       File.exist?("/tmp/test_trash_can").should == true
       File.directory?("/tmp/test_trash_can").should == true
       delete("/tmp/test_trash_can")
