@@ -33,7 +33,7 @@ describe "Trash" do
   it "moves multiple files to the trash" do
     `echo 'default text first' > /tmp/testing.txt`
     `echo 'default text second' > /tmp/testing2.txt`
-    Trash.new.throw_out(["/tmp/testing.txt", "/tmp/testing2.txt"])
+    Trash.new.throw_out(*["/tmp/testing.txt", "/tmp/testing2.txt"])
     tmp_should_not_contain "testing.txt"
     tmp_should_not_contain "testing2.txt"
     trash_should_contain "testing.txt"
@@ -102,7 +102,7 @@ describe "Trash" do
 
   it "moves multiple directories to the trash" do
     dirs = `mkdir -p /tmp/testdir01 /tmp/testdir02`
-    Trash.new.throw_out(["/tmp/testdir01", "/tmp/testdir02"])
+    Trash.new.throw_out(*["/tmp/testdir01", "/tmp/testdir02"])
     tmp_should_not_contain "testdir01"
     tmp_should_not_contain "testdir02"
     trash_should_contain_directory "testdir01"

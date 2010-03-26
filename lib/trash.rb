@@ -14,7 +14,7 @@ class Trash
     File.directory? @trashcan 
   end
   
-  def throw_out(paths)
+  def throw_out(*paths)
     paths.each do |path|
       path = File.expand_path(path)
       if File.exist? path
