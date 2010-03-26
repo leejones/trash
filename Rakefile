@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "trash-compactor"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.name = "trash"
+    gem.summary = %Q{trash can for the command line}
+    gem.description = %Q{when its hard to say goodbye, and rm is just too much... use trash instead.}
     gem.email = "scribblethink@gmail.com"
-    gem.homepage = "http://github.com/leejones/trash-compactor"
+    gem.homepage = "http://github.com/leejones/trash"
     gem.authors = ["Lee Jones"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "cucumber", ">= 0"
@@ -51,7 +51,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "trash-compactor #{version}"
+  rdoc.title = "trash #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
