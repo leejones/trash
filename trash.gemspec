@@ -35,7 +35,8 @@ Gem::Specification.new do |s|
      "lib/trash.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/trash_spec.rb"
+     "spec/trash_spec.rb",
+     "trash.gemspec"
   ]
   s.homepage = %q{http://github.com/leejones/trash}
   s.rdoc_options = ["--charset=UTF-8"]
