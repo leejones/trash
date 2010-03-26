@@ -43,10 +43,17 @@ class Trash
     path_extension = File.extname(path)
     if (File.exists?("#{ENV['HOME']}/.Trash/#{path_name}"))
       count = 1
-      while File.exists?("#{ENV['HOME']}/.Trash/#{path_name.gsub(path_extension, "0#{count}#{path_extension}")}")
-        count += 1
+      if File.directory? path
+        while File.exists?("#{ENV['HOME']}/.Trash/#{path_name}0#{count}")
+          count += 1
+        end
+        new_path_name = "#{path_name}0#{count}#{path_extension}"
+      else
+        while File.exists?("#{ENV['HOME']}/.Trash/#{path_name.gsub(path_extension, "0#{count}#{path_extension}")}")
+          count += 1
+        end
+        new_path_name = path_name.gsub(path_extension, "0#{count}#{path_extension}")
       end
-      new_path_name = path_name.gsub(path_extension, "0#{count}#{path_extension}")
     end
     return new_path_name
   end

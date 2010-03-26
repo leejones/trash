@@ -111,6 +111,33 @@ describe "Trash" do
     delete_from_trash "testdir02"
   end
 
+  it "appends a number to the directory name if a directory with same name already exisits in trash" do
+    `mkdir -p /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+    tmp_should_not_contain "testing"
+    trash_should_contain_directory "testing"
+    
+    `mkdir -p /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+    tmp_should_not_contain "testing"
+    trash_should_contain_directory "testing01" 
+  
+    `mkdir -p /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+    tmp_should_not_contain "testing"
+    trash_should_contain_directory "testing02" 
+
+    `mkdir -p /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+    tmp_should_not_contain "testing"
+    trash_should_contain_directory "testing03" 
+    
+    delete_from_trash "testing"
+    delete_from_trash "testing01"
+    delete_from_trash "testing02"
+    delete_from_trash "testing03"
+  end
+
   describe "trashcan" do
     it "finds the trashcan" do
       FileUtils.mkdir_p "#{ENV['HOME']}/.Trash"
