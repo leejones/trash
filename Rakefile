@@ -10,8 +10,10 @@ begin
     gem.email = "scribblethink@gmail.com"
     gem.homepage = "http://github.com/leejones/trash"
     gem.authors = ["Lee Jones"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "rspec", "~> 1.2.9"
     gem.add_development_dependency "cucumber", ">= 0"
+    gem.add_development_dependency "rake", "~> 0.8.7"
+    gem.add_development_dependency "jeweler", "~> 1.4.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
