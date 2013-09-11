@@ -29,6 +29,10 @@ You will find the files that you've trashed in ~/.Trash
 
   gem install trash
 
+== Contributors
+
+* ericmathison[https://github.com/ericmathison] (Eric Mathison)
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
