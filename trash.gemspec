@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Lee Jones"]
   s.date = %q{2013-09-11}
   s.default_executable = %q{trash}
-  s.description = %q{when its hard to say goodbye, and rm is just too much... use trash instead.}
+  s.description = %q{when it's hard to say goodbye, and rm is just too much... use trash instead.}
   s.email = %q{scribblethink@gmail.com}
   s.executables = ["trash"]
   s.extra_rdoc_files = [

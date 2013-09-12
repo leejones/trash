@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "trash"
     gem.summary = %Q{trash can for the command line}
-    gem.description = %Q{when its hard to say goodbye, and rm is just too much... use trash instead.}
+    gem.description = %Q{when it's hard to say goodbye, and rm is just too much... use trash instead.}
     gem.email = "scribblethink@gmail.com"
     gem.homepage = "http://github.com/leejones/trash"
     gem.authors = ["Lee Jones"]
