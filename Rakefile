@@ -12,7 +12,7 @@ begin
     gem.authors = ["Lee Jones"]
     gem.add_development_dependency "rspec", "~> 2.14.1"
     gem.add_development_dependency "rake", "~> 10.1.0"
-    gem.add_development_dependency "jeweler", "~> 1.4.0"
+    gem.add_development_dependency "jeweler", "~> 1.8.7"
     gem.add_development_dependency "rdoc", "~> 4.0.1"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
