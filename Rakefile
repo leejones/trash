@@ -11,8 +11,9 @@ begin
     gem.homepage = "http://github.com/leejones/trash"
     gem.authors = ["Lee Jones"]
     gem.add_development_dependency "rspec", "~> 2.14.1"
-    gem.add_development_dependency "rake", "~> 0.8.7"
-    gem.add_development_dependency "jeweler", "~> 1.4.0"
+    gem.add_development_dependency "rake", "~> 10.1.0"
+    gem.add_development_dependency "jeweler", "~> 1.8.7"
+    gem.add_development_dependency "rdoc", "~> 4.0.1"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -30,11 +31,10 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :spec => :check_dependencies
 task :default => :spec
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
+require 'rdoc/task'
+RDoc::Task.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
