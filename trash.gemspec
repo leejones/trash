@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Lee Jones"]
-  s.date = %q{2013-09-13}
+  s.date = %q{2013-09-17}
   s.default_executable = %q{trash}
   s.description = %q{when it's hard to say goodbye, and rm is just too much... use trash instead.}
   s.email = %q{scribblethink@gmail.com}
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     ".rspec",
      "Gemfile",
      "LICENSE",
      "README.rdoc",
@@ -30,7 +31,6 @@ Gem::Specification.new do |s|
      "VERSION",
      "bin/trash",
      "lib/trash.rb",
-     "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/trash_spec.rb",
      "trash.gemspec"
