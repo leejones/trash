@@ -93,7 +93,7 @@ describe "Trash" do
   end
   
   it "moves a directory to the trash" do
-    dir = `mkdir -p /tmp/testdir01`
+    FileUtils.mkdir_p("/tmp/testdir01")
     Trash.new.throw_out("/tmp/testdir01")
     tmp_should_not_contain "testdir01"
     trash_should_contain_directory "testdir01"
@@ -101,7 +101,7 @@ describe "Trash" do
   end
 
   it "moves multiple directories to the trash" do
-    dirs = `mkdir -p /tmp/testdir01 /tmp/testdir02`
+    FileUtils.mkdir_p %w(/tmp/testdir01 /tmp/testdir02)
     Trash.new.throw_out(*["/tmp/testdir01", "/tmp/testdir02"])
     tmp_should_not_contain "testdir01"
     tmp_should_not_contain "testdir02"
@@ -112,12 +112,12 @@ describe "Trash" do
   end
   
   it "handles dots in a directory name" do
-    `mkdir -p /tmp/testdir.2010`
+    FileUtils.mkdir_p("/tmp/testdir.2010")
     Trash.new.throw_out("/tmp/testdir.2010")
     tmp_should_not_contain "testdir.2010"
     trash_should_contain_directory "testdir.2010"
 
-    `mkdir -p /tmp/testdir.2010`
+    FileUtils.mkdir_p("/tmp/testdir.2010")
     Trash.new.throw_out("/tmp/testdir.2010")
     tmp_should_not_contain "testdir.2010"
     trash_should_contain_directory "testdir.201001"
@@ -128,22 +128,22 @@ describe "Trash" do
 
 
   it "appends a number to the directory name if a directory with same name already exisits in trash" do
-    `mkdir -p /tmp/testing`
+    FileUtils.mkdir_p("/tmp/testing")
     Trash.new.throw_out("/tmp/testing")
     tmp_should_not_contain "testing"
     trash_should_contain_directory "testing"
     
-    `mkdir -p /tmp/testing`
+    FileUtils.mkdir_p("/tmp/testing")
     Trash.new.throw_out("/tmp/testing")
     tmp_should_not_contain "testing"
     trash_should_contain_directory "testing01" 
   
-    `mkdir -p /tmp/testing`
+    FileUtils.mkdir_p("/tmp/testing")
     Trash.new.throw_out("/tmp/testing")
     tmp_should_not_contain "testing"
     trash_should_contain_directory "testing02" 
 
-    `mkdir -p /tmp/testing`
+    FileUtils.mkdir_p("/tmp/testing")
     Trash.new.throw_out("/tmp/testing")
     tmp_should_not_contain "testing"
     trash_should_contain_directory "testing03" 
