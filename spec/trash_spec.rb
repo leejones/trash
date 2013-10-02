@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Trash" do
   def delete(file)
-    `if [ -e #{file} ]; then rm -rf #{file}; fi;`
+    FileUtils.rm_rf(file)
   end
   
   def delete_from_trash(file)
