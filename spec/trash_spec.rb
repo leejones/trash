@@ -6,11 +6,11 @@ describe "Trash" do
   end
   
   def delete_from_trash(file)
-    delete("#{ENV['HOME']}/.Trash/#{file}")
+    delete("#{trash_dir}/#{file}")
   end
 
   def trash_should_contain(file_name)
-    File.exist?("#{ENV['HOME']}/.Trash/#{file_name}").should == true    
+    File.exist?("#{trash_dir}/#{file_name}").should == true
   end
 
   def trash_should_contain_directory(directory_name)
@@ -20,6 +20,10 @@ describe "Trash" do
   
   def tmp_should_not_contain(file_name)
     File.exist?("/tmp/#{file_name}").should == false
+  end
+
+  def trash_dir
+    "#{ENV['HOME']}/.Trash"
   end
 
   it "moves a file to the trash" do
@@ -55,29 +59,29 @@ describe "Trash" do
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
-    original = File.new("#{ENV['HOME']}/.Trash/testing.txt", "r")
-    original.read.should == "default text\n"
+    File.read("#{trash_dir}/testing.txt").should ==
+      "default text\n"
     
     `echo 'testing different file with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing01.txt" 
-    third = File.new("#{ENV['HOME']}/.Trash/testing01.txt", "r")
-    third.read.should == "testing different file with same name\n"
+    File.read("#{trash_dir}/testing01.txt").should ==
+      "testing different file with same name\n"
   
     `echo 'testing different file 2 with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing02.txt"
-    fourth = File.new("#{ENV['HOME']}/.Trash/testing02.txt", "r")
-    fourth.read.should == "testing different file 2 with same name\n"
+    File.read("#{trash_dir}/testing02.txt").should ==
+      "testing different file 2 with same name\n"
 
     `echo 'testing different file 3 with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing03.txt"
-    fifth = File.new("#{ENV['HOME']}/.Trash/testing03.txt", "r")
-    fifth.read.should == "testing different file 3 with same name\n"
+    File.read("#{trash_dir}/testing03.txt").should ==
+      "testing different file 3 with same name\n"
     
     delete_from_trash "testing.txt"
     delete_from_trash "testing01.txt"
@@ -156,7 +160,7 @@ describe "Trash" do
 
   describe "trash_can" do
     it "finds the trash can" do
-      FileUtils.mkdir_p "#{ENV['HOME']}/.Trash"
+      FileUtils.mkdir_p trash_dir
       Trash.new.has_trash_can?.should == true
     end
 
