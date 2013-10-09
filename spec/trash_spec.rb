@@ -59,29 +59,29 @@ describe "Trash" do
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing.txt"
-    original = File.new("#{trash_dir}/testing.txt", "r")
-    original.read.should == "default text\n"
+    File.read("#{trash_dir}/testing.txt").should ==
+      "default text\n"
     
     `echo 'testing different file with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing01.txt" 
-    third = File.new("#{trash_dir}/testing01.txt", "r")
-    third.read.should == "testing different file with same name\n"
+    File.read("#{trash_dir}/testing01.txt").should ==
+      "testing different file with same name\n"
   
     `echo 'testing different file 2 with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing02.txt"
-    fourth = File.new("#{trash_dir}/testing02.txt", "r")
-    fourth.read.should == "testing different file 2 with same name\n"
+    File.read("#{trash_dir}/testing02.txt").should ==
+      "testing different file 2 with same name\n"
 
     `echo 'testing different file 3 with same name' > /tmp/testing.txt`
     Trash.new.throw_out("/tmp/testing.txt")
     tmp_should_not_contain "testing.txt"
     trash_should_contain "testing03.txt"
-    fifth = File.new("#{trash_dir}/testing03.txt", "r")
-    fifth.read.should == "testing different file 3 with same name\n"
+    File.read("#{trash_dir}/testing03.txt").should ==
+      "testing different file 3 with same name\n"
     
     delete_from_trash "testing.txt"
     delete_from_trash "testing01.txt"
