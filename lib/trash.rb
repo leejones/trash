@@ -4,8 +4,8 @@ class Trash
   attr_reader :errors
   attr_accessor :trash_can
   
-  def initialize(options = {})
-    @trash_can = options[:trash_can].nil? ? "#{ENV['HOME']}/.Trash" : options[:trash_can]
+  def initialize(options = {:trash_can => "#{ENV['HOME']}/.Trash"})
+    @trash_can = options[:trash_can]
     create_trash_can_if_absent
     @errors = []
   end
