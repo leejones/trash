@@ -39,7 +39,7 @@ class Trash
   end
   
   def unique_file_name(path)
-    file_name      = File.split(path).last
+    file_name      = File.basename(path)
     file_extension = File.extname(path)
 
     return file_name unless File.exists?("#{@trash_can}/#{file_name}")
