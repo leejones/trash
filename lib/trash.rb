@@ -47,7 +47,7 @@ class Trash
     if File.directory? path
       unique_file_name_finder { |c| "#{file_name}#{"%02d" % c}" }
     else
-      unique_file_name_finder { |c| "#{file_name.gsub(file_extension, "#{"%02d" % c}#{file_extension}")}" }
+      unique_file_name_finder { |c| file_name.gsub(file_extension, "#{"%02d" % c}#{file_extension}") }
     end
   end
   
