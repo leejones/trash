@@ -89,6 +89,23 @@ describe "Trash" do
     delete_from_trash "testing03.txt"
   end
   
+  it 'appends a number to duplicate filename even when it has no extension' do
+    text1 = "text content"
+    text2 = "different content"
+    `echo '#{text1}' > /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+    `echo '#{text2}' > /tmp/testing`
+    Trash.new.throw_out("/tmp/testing")
+
+    trash_should_contain "testing"
+    File.read("#{trash_dir}/testing").should == "#{text1}\n"
+    trash_should_contain "testing01"
+    File.read("#{trash_dir}/testing01").should == "#{text2}\n"
+
+    delete_from_trash "testing"
+    delete_from_trash "testing01"
+  end
+
   it "should throw an error when file does not exist" do
     tmp_should_not_contain "not_a_file.txt"
     trash = Trash.new
