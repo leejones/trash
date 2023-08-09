@@ -32,6 +32,7 @@ You will find the files that you've trashed in ~/.Trash
 == Contributors
 
 * ericmathison[https://github.com/ericmathison] (Eric Mathison)
+* brian-davis[https://github.com/brian-davis] (Brian Davis)
 
 == Note on Patches/Pull Requests
  
