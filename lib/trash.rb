@@ -41,13 +41,14 @@ class Trash
   def unique_file_name(path)
     file_name      = File.basename(path)
     file_extension = File.extname(path)
+    file_name_without_extension = File.basename(path, ".*")
 
     return file_name unless File.exists?("#{@trash_can}/#{file_name}")
 
     if File.directory? path
       unique_file_name_finder { |c| "#{file_name}#{"%02d" % c}" }
     else
-      unique_file_name_finder { |c| "#{file_name.gsub(file_extension, "#{"%02d" % c}#{file_extension}")}" }
+      unique_file_name_finder { |c| "#{file_name_without_extension}#{"%02d" % c}#{file_extension}" }
     end
   end
   
