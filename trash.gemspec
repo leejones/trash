@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.authors = ["Lee Jones".freeze]
   s.date = "2017-01-24"
   s.description = "when it's hard to say goodbye, and rm is just too much... use trash instead.".freeze
-  s.email = "scribblethink@gmail.com".freeze
   s.executables = ["trash".freeze]
   s.extra_rdoc_files = [
     "LICENSE",
