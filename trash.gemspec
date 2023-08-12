@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "trash".freeze
-  s.version = "0.2.1"
+  s.version = File.read("VERSION")
 
   s.require_paths = ["lib".freeze]
   s.authors = ["Lee Jones".freeze]
