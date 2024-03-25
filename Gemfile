@@ -8,5 +8,5 @@ source "https://rubygems.org"
 group :development do
   gem "rspec", "~> 3.12.0"
   gem "rake", "~> 13.0.6"
-  gem "rdoc", "~> 6.5.0"
+  gem "rdoc", "~> 6.5.1"
 end
